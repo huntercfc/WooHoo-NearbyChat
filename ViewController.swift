@@ -18,14 +18,11 @@ class ViewController: UIViewController, MCNearbyServiceBrowserDelegate, MCNearby
     //This connects our code to the text field so we can display messages
     @IBOutlet weak var chatbox: UITextView!
     
-    let screenSize = UIScreen.main.bounds //Easy access to screen size
     
     //This is where we setup the app
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        setUpSession()//Sets up the nearby communication for you
+        //Call function "setUpSession to set up the chat
         
     }
     
