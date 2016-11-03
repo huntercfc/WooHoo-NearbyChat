@@ -24,23 +24,17 @@ class ViewController: UIViewController, MCNearbyServiceBrowserDelegate, MCNearby
     override func viewDidLoad() {
         super.viewDidLoad()
         
-    
-        setUpSession()
+        
+        setUpSession()//Sets up the nearby communication for you
         
     }
     
-    
-    
-    
     func sendMessage() { //when send is pressed, send message in textfield to peers
         
-            let msg = self.messageField.text?.data(using: String.Encoding.utf8, allowLossyConversion: false)
+            let msg = self.messageField.text?.data(using: String.Encoding.utf8, allowLossyConversion: false)//Encode our message
             
-            self.chatbox.text.append("\n Me" + ": " + messageField.text!)
-        
-        
-        
-        
+            self.chatbox.text.append("Me" + ": " + messageField.text! + "\n")//Print out the message
+  
             //Sends the message to all nearby peers
             do{
                 try self.session.send(msg!, toPeers: self.session.connectedPeers,
@@ -53,15 +47,15 @@ class ViewController: UIViewController, MCNearbyServiceBrowserDelegate, MCNearby
         
             //Clears messagefield
             self.messageField.text = ""
-            
-    
     }
     
+    //Called when the user presses the send button
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        sendMessage()
+        sendMessage()//Send the message
         return true
     }
     
+    //Set up the communication protocols - you can ignore
     var browser : MCNearbyServiceBrowser!
     var advertiser : MCNearbyServiceAdvertiser!
     var session : MCSession!
@@ -83,17 +77,29 @@ class ViewController: UIViewController, MCNearbyServiceBrowserDelegate, MCNearby
         self.messageField.delegate = self
     }
     
+    //This is called when we recieve a message
     func session(_ session: MCSession, didReceive data: Data,
                  fromPeer peerID: MCPeerID)  {
-        // Called when a peer sends an NSData to us
+        // Called when a peer sends a message to us
         
-        // This needs to run on the main queue
+        // This needs to run on the main queue for speed
         DispatchQueue.main.async {
             let msg = NSString(data: data as Data, encoding: String.Encoding.utf8.rawValue)
-            self.chatbox.text.append("\n" + peerID.displayName + ": " + (msg! as String))
+            self.chatbox.text.append(peerID.displayName + ": " + (msg! as String) + "\n")
             
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // YOU CAN IGNORE THIS CODE BELOW
     
     //invites peers to session automatically
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
