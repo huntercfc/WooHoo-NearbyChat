@@ -1,1 +1,2 @@
-# woohoo---nearby-chat-app
+# WooHoo - Nearby Chat App
+Let's build an iOS app!
